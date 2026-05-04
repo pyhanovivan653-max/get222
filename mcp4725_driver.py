@@ -24,14 +24,14 @@ class MCP4725:
             print("Число выходит за разрядность MCP4725 (12 бит)")
             return
 
-        first_bute = self.wm  | self.pds  |(number >> 8)
-        second_bute = number & 0xFF
+        first_byte = self.wm  | self.pds  |(number >> 8)
+        second_byte = number & 0xFF
 
-        self.bus.write_bute_data(self.address, first_bute, second_bute)
+        self.bus.write_byte_data(self.address, first_byte, second_byte)
 
         if self.verbose:
             print(f"Число: {number}, отправленные по I2C данные: "
-                  f"[0x{(self.address << 1):02X}, 0x{first_bute:02X}, 0x{second_bute:02X}]\n")
+                  f"[0x{(self.address << 1):02X}, 0x{first_byte:02X}, 0x{second_byte:02X}]\n")
 
     def set_voltage(self, voltage):
         if voltage > self.dynamic_range:
@@ -43,7 +43,7 @@ class MCP4725:
         self.set_number(number)
 
 if __name__ == "__main__":
-    dac = MCP4725((dynamic_range=5.16))
+    dac = MCP4725(dynamic_range=5.16)
     try:
         while True:
             target_v = float(input("Введите желаемое напряжение:\n"))

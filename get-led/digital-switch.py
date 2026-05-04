@@ -3,20 +3,17 @@ import time
 
 GPIO.setmode(GPIO.BCM)
 
-led = 18
+led = 26
 button = 13
 
 GPIO.setup(led, GPIO.OUT)
 GPIO.setup(button, GPIO.IN)
 
-state = False
+state = 0
 GPIO.output(led, state)
 
-try:
-    while True:
-        if GPIO.input(button):
-            state = not state
-            GPIO.output(led, state)
-            time.sleep(0.2)
-except KeyboardInterrupt:
-    GPIO.cleanup()
+while True:
+    if GPIO.input(button):
+        state = not state
+        GPIO.output(led, state)
+        time.sleep(0.2)
